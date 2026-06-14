@@ -1,6 +1,6 @@
 {
   "seed": "elyx-resource-allocator-v1",
-  "baseDate": "2026-06-14T17:00:00.000Z",
+  "baseDate": "2026-06-15T00:00:00.000Z",
   "clients": [
     {
       "id": "1f84e33e-d140-4671-8886-2ab8189a1e27",
@@ -494,63 +494,63 @@
       "id": "05c64d8d-bd81-4e43-ab92-7bc90923db55",
       "clientId": "1f84e33e-d140-4671-8886-2ab8189a1e27",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     },
     {
       "id": "6ece51b6-6e7e-4c14-bc1e-a352da6bd99c",
       "clientId": "5b77b934-5f91-42f7-b8a7-7924526a7860",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     },
     {
       "id": "470bff4f-3ea3-4403-8458-bc18cb7be00e",
       "clientId": "27c774db-3129-451d-a9a5-81e4a219689a",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     },
     {
       "id": "8d69d10f-23e6-47ea-9c41-830cd2bbf7b3",
       "clientId": "32fe9365-2b4f-4df9-9ff7-51f81f5f149e",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     },
     {
       "id": "cb00506c-0d32-46c0-ae29-12ea696cb000",
       "clientId": "234f4dbc-8550-43eb-9f9c-f095ac9d55bb",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     },
     {
       "id": "b6ab4c74-3067-4530-9040-3084e0ef2abb",
       "clientId": "1dcf73eb-c815-4763-8d1f-5002c50f2413",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     },
     {
       "id": "852bd907-6aa4-4e60-839e-a19623f9a904",
       "clientId": "c28926dd-890e-4a0f-8f4d-2407945379bf",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     },
     {
       "id": "f31bcb4f-8ffd-4ab3-9072-e8a9826cabab",
       "clientId": "d382bfd2-e6f6-44c7-b3f9-22862a96bdf6",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     },
     {
       "id": "3dbdb25c-fc4c-4225-8b82-fbf120fc8cdb",
       "clientId": "4b45db4e-dc92-41eb-82f1-92ec7df4e0f7",
       "version": 1,
-      "effectiveFrom": "2026-06-14T17:00:00.000Z",
+      "effectiveFrom": "2026-06-15T00:00:00.000Z",
       "isCurrent": true
     }
   ],
@@ -3808,7 +3808,7 @@
       "id": "da1eb697-ee38-4143-be35-0cff5a855114",
       "userId": "4d7a841a-a02e-4e7d-a27d-9b391aefb795",
       "equipmentId": null,
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T07:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -3824,7 +3824,7 @@
       "id": "23cd9d6f-70bf-47cc-89f0-5daa3374f1c1",
       "userId": "76462289-8134-450e-9843-38bd85b83a76",
       "equipmentId": null,
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T07:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -3936,7 +3936,7 @@
       "id": "77d24594-be79-46b4-a6d3-a2bf1d06eecb",
       "userId": null,
       "equipmentId": "b71bf5e1-2297-44fa-a3d7-5680284e1f04",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -3944,7 +3944,7 @@
       "id": "cbe48b11-8006-43dd-997a-3ef9b4b95bc5",
       "userId": null,
       "equipmentId": "54027f99-1291-4320-8ed0-448196379209",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -3968,7 +3968,7 @@
       "id": "bef8329c-90f8-4c22-bb5f-b1f0e742ae4b",
       "userId": null,
       "equipmentId": "eda0dcfb-0d06-4ef6-b5ea-a8a41aa118ff",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -3976,7 +3976,7 @@
       "id": "83f3d428-4a22-4033-a95f-fb18729fdf4e",
       "userId": null,
       "equipmentId": "e66a79a9-722b-4f93-92a0-f9cb716e8e88",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -3984,7 +3984,7 @@
       "id": "4ffda04a-cbd5-44fd-9c7f-fa43d8deccb3",
       "userId": null,
       "equipmentId": "485d861c-0eb9-4d93-bfe4-d1f7de53c32e",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -3992,7 +3992,7 @@
       "id": "fc5d10a1-e5c3-446e-9a62-007a9ac3a8a8",
       "userId": null,
       "equipmentId": "d87f59dc-dd57-4799-aed7-50a8760af8cb",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -4008,7 +4008,7 @@
       "id": "fcc2bf71-d7be-4696-a835-248604e170e6",
       "userId": null,
       "equipmentId": "fcc802c9-2c08-4dd4-860c-26c1ed40e6c3",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -4016,7 +4016,7 @@
       "id": "70cf6c64-ee92-45a2-b6d9-76620adc5375",
       "userId": null,
       "equipmentId": "4799ee77-7a82-4257-a043-d13d2db7b9da",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -4024,7 +4024,7 @@
       "id": "b3225ae2-e1f6-488b-a0b6-605e6a0fec18",
       "userId": null,
       "equipmentId": "52838d4b-2131-4e77-ae06-4a7c819b89bc",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -4048,7 +4048,7 @@
       "id": "dbf42135-2f08-4c34-a453-0f00aaf390aa",
       "userId": null,
       "equipmentId": "d04c5eb0-43fb-4ab3-bff1-1b2fc325bd76",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -4056,7 +4056,7 @@
       "id": "e454fd88-3612-4406-aebc-e2b31aedb9ca",
       "userId": null,
       "equipmentId": "c5c2fa58-fea6-4d05-b124-3a7bfe590143",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -4064,7 +4064,7 @@
       "id": "d673c735-bfc5-462b-9496-197fc7d099e6",
       "userId": null,
       "equipmentId": "04743931-3b78-4ed3-9d7d-7e36ce158772",
-      "startsAt": "2026-06-14T23:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-06-15T14:00:00.000Z",
       "availabilityType": "AVAILABLE"
     },
@@ -36072,7 +36072,7 @@
       "id": "526974d5-9b81-425f-bf25-f00ff5809fa1",
       "userId": null,
       "equipmentId": "04743931-3b78-4ed3-9d7d-7e36ce158772",
-      "startsAt": "2026-06-14T17:00:00.000Z",
+      "startsAt": "2026-06-15T00:00:00.000Z",
       "endsAt": "2026-09-12T17:00:00.000Z",
       "availabilityType": "UNAVAILABLE"
     }
@@ -36393,49 +36393,49 @@
   ],
   "generatedSchedules": [
     {
-      "scheduleId": "779a6a18-8a0f-4b28-bacf-3eaeaaeffde5",
+      "scheduleId": "b86126a0-ab09-4076-a6df-0242ab5ea651",
       "version": 2,
       "scheduledCount": 303,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "84355115-0faa-42e4-a338-e79bb75638f8",
+      "scheduleId": "82d86cb0-e159-4c19-a3da-16eb41ace7d9",
       "version": 2,
       "scheduledCount": 303,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "3f1a9a1f-408f-4c25-abbf-c52a8b2ec0ad",
+      "scheduleId": "d828b218-fc8b-434c-bcdf-9d2247589c7d",
       "version": 2,
       "scheduledCount": 303,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "8ed5bfe2-19b6-492b-8557-7d6f3c8ccdad",
+      "scheduleId": "b0716a7f-dec5-460c-8989-f060fe321787",
       "version": 2,
       "scheduledCount": 303,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "1c5dd363-2bc1-42a1-8cda-5cd9235088d0",
+      "scheduleId": "16c484e4-cc38-48ac-91e6-9f26525d9455",
       "version": 2,
       "scheduledCount": 303,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "b068bae3-51f1-42dd-8d1f-0a50c6ca9b57",
+      "scheduleId": "1a894e88-5ff5-4601-be68-270018040dc4",
       "version": 2,
       "scheduledCount": 329,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "2f542faa-07b1-4531-9ed1-ac61b8dde885",
+      "scheduleId": "6ba6cd36-b90c-4c6a-b402-62e8682fc6d1",
       "version": 2,
       "scheduledCount": 475,
       "unresolvedCount": 5,
@@ -36445,7 +36445,7 @@
       ]
     },
     {
-      "scheduleId": "c2acdf32-30ff-432b-ad2c-5842be107464",
+      "scheduleId": "24a64371-87a9-4315-b73b-e9f69731120f",
       "version": 2,
       "scheduledCount": 303,
       "unresolvedCount": 0,

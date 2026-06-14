@@ -1,6 +1,7 @@
 import { and, asc, desc, eq, gt, inArray, lt, ne, or } from "drizzle-orm";
 
 import { db } from "@/lib/db";
+import { startOfUtcDay } from "@/lib/availability-time";
 import {
   actionPlans,
   activities,
@@ -1254,7 +1255,7 @@ function copyManualEvents(events: CalendarEvent[]): ScheduledDraft[] {
 
 export async function generateScheduleForClient({
   clientId,
-  effectiveFrom = new Date(),
+  effectiveFrom = startOfUtcDay(new Date()),
   horizonDays = 90,
 }: {
   clientId: string;

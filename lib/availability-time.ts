@@ -37,6 +37,10 @@ export function startOfLocalDay(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
+export function startOfUtcDay(date: Date) {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+}
+
 export function addLocalDays(date: Date, days: number) {
   return new Date(
     date.getFullYear(),

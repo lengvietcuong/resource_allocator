@@ -198,6 +198,7 @@ function AvailabilityCalendarFrame({
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin]}
+          firstDay={1}
           initialView={initialView}
           initialDate={initialDate}
           height="100%"

@@ -27,7 +27,7 @@ type NewCalendarEvent = typeof schema.calendarEvents.$inferInsert;
 function startOfToday() {
   const now = new Date();
 
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
 }
 
 function stableUuid(input: string) {
@@ -621,6 +621,17 @@ type BlockedPeriod = {
   endMinute?: number;
 };
 
+function addAvailabilityRow(row: NewAvailabilitySlot) {
+  if (row.endsAt <= BASE_DATE) {
+    return;
+  }
+
+  availabilityData.push({
+    ...row,
+    startsAt: row.startsAt < BASE_DATE ? BASE_DATE : row.startsAt,
+  });
+}
+
 function addUserAvailability(
   userId: string,
   day: number,
@@ -630,7 +641,7 @@ function addUserAvailability(
   startMinute = 0,
   endMinute = 0,
 ) {
-  availabilityData.push({
+  addAvailabilityRow({
     id: stableUuid(`availability-user-${userId}-${day}-${startHour}-${startMinute}-${endHour}-${endMinute}-${type}`),
     userId,
     equipmentId: null,
@@ -649,7 +660,7 @@ function addEquipmentAvailability(
   startMinute = 0,
   endMinute = 0,
 ) {
-  availabilityData.push({
+  addAvailabilityRow({
     id: stableUuid(`availability-equipment-${equipmentId}-${day}-${startHour}-${startMinute}-${endHour}-${endMinute}-${type}`),
     userId: null,
     equipmentId,
@@ -694,7 +705,7 @@ function addEquipmentWindow(
 }
 
 function addUserBlockedPeriod(userId: string, period: BlockedPeriod) {
-  availabilityData.push({
+  addAvailabilityRow({
     id: stableUuid(`availability-user-blocked-${userId}-${period.key}`),
     userId,
     equipmentId: null,
@@ -705,7 +716,7 @@ function addUserBlockedPeriod(userId: string, period: BlockedPeriod) {
 }
 
 function addEquipmentBlockedPeriod(equipmentId: string, period: BlockedPeriod) {
-  availabilityData.push({
+  addAvailabilityRow({
     id: stableUuid(`availability-equipment-blocked-${equipmentId}-${period.key}`),
     userId: null,
     equipmentId,

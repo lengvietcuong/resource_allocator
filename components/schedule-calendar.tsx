@@ -364,6 +364,7 @@ function ScheduleCalendarFrame({
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          firstDay={1}
           initialView={initialView}
           initialDate={initialDate}
           height="100%"
