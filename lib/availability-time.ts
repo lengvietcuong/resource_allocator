@@ -33,6 +33,52 @@ export function parseLocalDateTime(date: string, time: string) {
   return parsed;
 }
 
+function parseDateParts(date: string) {
+  const dateMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+
+  if (!dateMatch) {
+    throw new Error("Date or time is invalid.");
+  }
+
+  const [, yearValue, monthValue, dayValue] = dateMatch;
+  const year = Number(yearValue);
+  const month = Number(monthValue);
+  const day = Number(dayValue);
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+
+  if (
+    parsed.getUTCFullYear() !== year ||
+    parsed.getUTCMonth() !== month - 1 ||
+    parsed.getUTCDate() !== day
+  ) {
+    throw new Error("Date or time is invalid.");
+  }
+
+  return { year, month, day };
+}
+
+export function parseDateTimeWithOffset(date: string, time: string, timezoneOffsetMinutes: number) {
+  const { year, month, day } = parseDateParts(date);
+  const { hours, minutes } = parseLocalTime(time);
+
+  return new Date(Date.UTC(year, month - 1, day, hours, minutes) + timezoneOffsetMinutes * 60_000);
+}
+
+export function timeRangeWithOffset(date: string, startTime: string, endTime: string, timezoneOffsetMinutes: number) {
+  const startsAt = parseDateTimeWithOffset(date, startTime, timezoneOffsetMinutes);
+  let endsAt = parseDateTimeWithOffset(date, endTime, timezoneOffsetMinutes);
+
+  if (endsAt.getTime() === startsAt.getTime()) {
+    throw new Error("End time must be after start time.");
+  }
+
+  if (endsAt < startsAt) {
+    endsAt = new Date(endsAt.getTime() + 24 * 60 * 60_000);
+  }
+
+  return { startsAt, endsAt };
+}
+
 export function startOfLocalDay(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }

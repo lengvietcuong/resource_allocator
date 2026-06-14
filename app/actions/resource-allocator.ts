@@ -37,9 +37,11 @@ import {
 import {
   addLocalDays,
   localTimeRangeOnOrAfterDate,
+  parseDateTimeWithOffset,
   parseLocalDateTime,
   startOfLocalDay,
   startOfUtcDay,
+  timeRangeWithOffset,
 } from "@/lib/availability-time";
 
 const activityTypes = ["FITNESS", "FOOD", "MEDICATION", "THERAPY", "CONSULTATION"] as const;
@@ -100,6 +102,22 @@ function numberValue(formData: FormData, key: string) {
   }
 
   return value;
+}
+
+function optionalTimezoneOffsetValue(formData: FormData) {
+  const value = optionalTextValue(formData, "timezoneOffsetMinutes");
+
+  if (!value) {
+    return null;
+  }
+
+  const parsed = Number(value);
+
+  if (!Number.isInteger(parsed) || parsed < -840 || parsed > 840) {
+    throw new Error("Date or time is invalid.");
+  }
+
+  return parsed;
 }
 
 function scheduleHorizonValue(formData: FormData) {
@@ -1646,13 +1664,20 @@ export async function editEventAction(formData: FormData) {
     const allDay = checkboxValue(formData, "allDay");
     const startDate = textValue(formData, "startDate");
     const notes = optionalTextValue(formData, "notes");
-    const parsedDate = parseLocalDateTime(startDate, "00:00");
+    const timezoneOffsetMinutes = optionalTimezoneOffsetValue(formData);
+    const parsedDate = timezoneOffsetMinutes === null
+      ? parseLocalDateTime(startDate, "00:00")
+      : parseDateTimeWithOffset(startDate, "00:00", timezoneOffsetMinutes);
     const { startsAt: startTime, endsAt: endTime } = allDay
       ? {
         startsAt: parsedDate,
-        endsAt: addLocalDays(parsedDate, 1),
+        endsAt: timezoneOffsetMinutes === null
+          ? addLocalDays(parsedDate, 1)
+          : new Date(parsedDate.getTime() + 24 * 60 * 60_000),
       }
-      : localTimeRangeOnOrAfterDate(parsedDate, textValue(formData, "startTime"), textValue(formData, "endTime"));
+      : timezoneOffsetMinutes === null
+        ? localTimeRangeOnOrAfterDate(parsedDate, textValue(formData, "startTime"), textValue(formData, "endTime"))
+        : timeRangeWithOffset(startDate, textValue(formData, "startTime"), textValue(formData, "endTime"), timezoneOffsetMinutes);
 
     const [eventSchedule] = await db
       .select({

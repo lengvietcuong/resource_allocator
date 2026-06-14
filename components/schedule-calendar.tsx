@@ -176,9 +176,11 @@ function EventDateTimeFields({
   defaultAllDay?: boolean;
 }) {
   const [allDay, setAllDay] = useState(defaultAllDay);
+  const timezoneOffsetMinutes = new Date().getTimezoneOffset();
 
   return (
     <div className="grid gap-3 sm:grid-cols-4">
+      <input name="timezoneOffsetMinutes" type="hidden" value={timezoneOffsetMinutes} />
       <Label className="grid gap-1 text-sm font-medium">
         Date
         <DatePickerInput defaultValue={defaultDate} name="startDate" />
