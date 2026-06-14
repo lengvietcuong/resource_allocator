@@ -25,6 +25,21 @@ const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * MINUTE;
 const SLOT_STEP_MINUTES = 15;
 const appTimeZone = process.env.APP_TIME_ZONE ?? process.env.NEXT_PUBLIC_APP_TIME_ZONE ?? "Asia/Ho_Chi_Minh";
+const fixedAppTimeZoneOffsetMinutes = (() => {
+  if (appTimeZone === "Asia/Ho_Chi_Minh" || appTimeZone === "Asia/Bangkok" || appTimeZone === "Asia/Jakarta") {
+    return -420;
+  }
+
+  if (appTimeZone === "Asia/Singapore") {
+    return -480;
+  }
+
+  if (appTimeZone === "UTC" || appTimeZone === "Etc/UTC") {
+    return 0;
+  }
+
+  return null;
+})();
 
 type ResourceLinks = {
   staffIds: string[];
@@ -114,6 +129,19 @@ function addDays(date: Date, days: number) {
 }
 
 function appDateParts(date: Date) {
+  if (fixedAppTimeZoneOffsetMinutes !== null) {
+    const shifted = new Date(date.getTime() - fixedAppTimeZoneOffsetMinutes * MINUTE);
+
+    return {
+      year: shifted.getUTCFullYear(),
+      month: shifted.getUTCMonth() + 1,
+      day: shifted.getUTCDate(),
+      hour: shifted.getUTCHours(),
+      minute: shifted.getUTCMinutes(),
+      second: shifted.getUTCSeconds(),
+    };
+  }
+
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: appTimeZone,
     year: "numeric",
@@ -159,6 +187,10 @@ function appTimeZoneOffset(date: Date) {
 }
 
 function appLocalDateTime(year: number, month: number, day: number, hour = 0, minute = 0) {
+  if (fixedAppTimeZoneOffsetMinutes !== null) {
+    return new Date(Date.UTC(year, month - 1, day, hour, minute) + fixedAppTimeZoneOffsetMinutes * MINUTE);
+  }
+
   const guess = new Date(Date.UTC(year, month - 1, day, hour, minute));
   const first = new Date(guess.getTime() - appTimeZoneOffset(guess));
   const second = new Date(guess.getTime() - appTimeZoneOffset(first));
