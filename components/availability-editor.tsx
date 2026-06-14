@@ -167,6 +167,7 @@ function AvailabilityActionForm({
   const updateChoiceRef = useRef<HTMLInputElement | null>(null);
   const confirmedRef = useRef(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const timezoneOffsetMinutes = new Date().getTimezoneOffset();
 
   function submitWithChoice(updateRelevantSchedules: boolean) {
     confirmedRef.current = true;
@@ -193,6 +194,7 @@ function AvailabilityActionForm({
         }}
         ref={formRef}
       >
+        <input name="timezoneOffsetMinutes" type="hidden" value={timezoneOffsetMinutes} />
         <input name="updateRelevantSchedules" ref={updateChoiceRef} type="hidden" value="yes" />
         {children}
       </form>

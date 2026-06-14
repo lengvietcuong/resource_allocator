@@ -40,7 +40,6 @@ import {
   parseDateTimeWithOffset,
   parseLocalDateTime,
   startOfLocalDay,
-  startOfUtcDay,
   timeRangeWithOffset,
 } from "@/lib/availability-time";
 
@@ -387,8 +386,23 @@ function weekdayValues(formData: FormData) {
   return Array.from(new Set(weekdays));
 }
 
-async function availabilityBaseDate() {
-  return startOfLocalDay(new Date());
+function browserStartOfToday(formData: FormData) {
+  const timezoneOffsetMinutes = optionalTimezoneOffsetValue(formData);
+  const now = new Date();
+
+  if (timezoneOffsetMinutes === null) {
+    return startOfLocalDay(now);
+  }
+
+  const browserNow = new Date(now.getTime() - timezoneOffsetMinutes * 60_000);
+
+  return new Date(
+    Date.UTC(
+      browserNow.getUTCFullYear(),
+      browserNow.getUTCMonth(),
+      browserNow.getUTCDate(),
+    ) + timezoneOffsetMinutes * 60_000,
+  );
 }
 
 function availabilityRowsFromForm({
@@ -435,13 +449,14 @@ async function markAvailabilityOwnerChanged(
   entityType: "user" | "equipment",
   entityId: string,
   updateRelevantSchedules: boolean,
+  effectiveFrom: Date,
 ) {
   if (entityType === "equipment") {
     const affected = await markSchedulesInvalidForEquipment(entityId);
 
     if (updateRelevantSchedules) {
       for (const row of affected) {
-        await regenerateClientScheduleIfPossible(row.clientId);
+        await regenerateClientScheduleIfPossible(row.clientId, effectiveFrom);
       }
     }
 
@@ -458,14 +473,14 @@ async function markAvailabilityOwnerChanged(
     await markClientScheduleInvalid(entityId);
 
     if (updateRelevantSchedules) {
-      await regenerateClientScheduleIfPossible(entityId);
+      await regenerateClientScheduleIfPossible(entityId, effectiveFrom);
     }
   } else {
     const affected = await markSchedulesInvalidForStaff(entityId);
 
     if (updateRelevantSchedules) {
       for (const row of affected) {
-        await regenerateClientScheduleIfPossible(row.clientId);
+        await regenerateClientScheduleIfPossible(row.clientId, effectiveFrom);
       }
     }
   }
@@ -555,7 +570,7 @@ async function markClientScheduleInvalid(clientId: string) {
     .where(eq(users.id, clientId));
 }
 
-async function regenerateClientScheduleIfPossible(clientId: string) {
+async function regenerateClientScheduleIfPossible(clientId: string, effectiveFrom = startOfLocalDay(new Date())) {
   const [plan] = await db
     .select({ id: actionPlans.id })
     .from(actionPlans)
@@ -563,7 +578,7 @@ async function regenerateClientScheduleIfPossible(clientId: string) {
     .limit(1);
 
   if (plan) {
-    await generateScheduleForClient({ clientId });
+    await generateScheduleForClient({ clientId, effectiveFrom });
   }
 }
 
@@ -1537,8 +1552,8 @@ export async function generateScheduleAction(formData: FormData) {
 
     target = clientCalendarRedirect(redirectTarget(formData, `/?tab=clients&clientId=${clientId}`), clientId);
     const effectiveFrom = effectiveDate
-      ? startOfUtcDay(parseLocalDateTime(effectiveDate, "00:00"))
-      : startOfUtcDay(new Date());
+      ? startOfLocalDay(parseLocalDateTime(effectiveDate, "00:00"))
+      : startOfLocalDay(new Date());
 
     if (startOfLocalDay(effectiveFrom) < startOfLocalDay(new Date())) {
       throw new Error("Schedule start date cannot be in the past.");
@@ -2010,6 +2025,7 @@ export async function saveAvailabilityPeriodAction(formData: FormData) {
     const weekdays = weekdayValues(formData);
     const slotIds = csvValue(formData, "slotIds");
     const updateRelevantSchedules = formData.get("updateRelevantSchedules") !== "no";
+    const scheduleEffectiveFrom = browserStartOfToday(formData);
 
     target = redirectTarget(formData);
 
@@ -2017,7 +2033,7 @@ export async function saveAvailabilityPeriodAction(formData: FormData) {
       throw new Error("Choose at least one day of the week.");
     }
 
-    const baseDate = await availabilityBaseDate();
+    const baseDate = browserStartOfToday(formData);
     const rows = availabilityRowsFromForm({
       entityType,
       entityId,
@@ -2038,7 +2054,7 @@ export async function saveAvailabilityPeriodAction(formData: FormData) {
       }
     });
 
-    await markAvailabilityOwnerChanged(entityType, entityId, updateRelevantSchedules);
+    await markAvailabilityOwnerChanged(entityType, entityId, updateRelevantSchedules, scheduleEffectiveFrom);
   } catch (error) {
     toastType = "error";
     message = actionErrorMessage(error, "Unable to update availability.");
@@ -2061,15 +2077,25 @@ export async function saveUnavailableExceptionAction(formData: FormData) {
     const endDate = textValue(formData, "endDate");
     const allDay = checkboxValue(formData, "allDay");
     const updateRelevantSchedules = formData.get("updateRelevantSchedules") !== "no";
+    const scheduleEffectiveFrom = browserStartOfToday(formData);
+    const timezoneOffsetMinutes = optionalTimezoneOffsetValue(formData);
 
     target = redirectTarget(formData);
 
-    const startsAt = allDay
-      ? parseLocalDateTime(startDate, "00:00")
-      : parseLocalDateTime(startDate, textValue(formData, "startTime"));
-    const endsAt = allDay
-      ? addLocalDays(parseLocalDateTime(endDate, "00:00"), 1)
-      : parseLocalDateTime(endDate, textValue(formData, "endTime"));
+    const startsAt = timezoneOffsetMinutes === null
+      ? allDay
+        ? parseLocalDateTime(startDate, "00:00")
+        : parseLocalDateTime(startDate, textValue(formData, "startTime"))
+      : allDay
+        ? parseDateTimeWithOffset(startDate, "00:00", timezoneOffsetMinutes)
+        : parseDateTimeWithOffset(startDate, textValue(formData, "startTime"), timezoneOffsetMinutes);
+    const endsAt = timezoneOffsetMinutes === null
+      ? allDay
+        ? addLocalDays(parseLocalDateTime(endDate, "00:00"), 1)
+        : parseLocalDateTime(endDate, textValue(formData, "endTime"))
+      : allDay
+        ? new Date(parseDateTimeWithOffset(endDate, "00:00", timezoneOffsetMinutes).getTime() + 24 * 60 * 60_000)
+        : parseDateTimeWithOffset(endDate, textValue(formData, "endTime"), timezoneOffsetMinutes);
 
     if (endsAt <= startsAt) {
       throw new Error("End date and time must be after the start.");
@@ -2089,7 +2115,7 @@ export async function saveUnavailableExceptionAction(formData: FormData) {
       });
     });
 
-    await markAvailabilityOwnerChanged(entityType, entityId, updateRelevantSchedules);
+    await markAvailabilityOwnerChanged(entityType, entityId, updateRelevantSchedules, scheduleEffectiveFrom);
   } catch (error) {
     toastType = "error";
     message = actionErrorMessage(error, "Unable to save unavailable exception.");
@@ -2109,6 +2135,7 @@ export async function deleteAvailabilityPeriodAction(formData: FormData) {
     const entityId = textValue(formData, "entityId");
     const slotIds = csvValue(formData, "slotIds");
     const updateRelevantSchedules = formData.get("updateRelevantSchedules") !== "no";
+    const scheduleEffectiveFrom = browserStartOfToday(formData);
 
     target = redirectTarget(formData);
 
@@ -2117,7 +2144,7 @@ export async function deleteAvailabilityPeriodAction(formData: FormData) {
     }
 
     await db.delete(availabilitySlots).where(inArray(availabilitySlots.id, slotIds));
-    await markAvailabilityOwnerChanged(entityType, entityId, updateRelevantSchedules);
+    await markAvailabilityOwnerChanged(entityType, entityId, updateRelevantSchedules, scheduleEffectiveFrom);
   } catch (error) {
     toastType = "error";
     message = actionErrorMessage(error, "Unable to delete availability period.");
