@@ -494,7 +494,15 @@ function clientCalendarRedirect(target: string, clientId: string) {
 }
 
 function actionErrorMessage(error: unknown, fallback: string) {
-  return error instanceof Error && userSafeErrorMessages.has(error.message) ? error.message : fallback;
+  if (!(error instanceof Error)) {
+    return fallback;
+  }
+
+  if (userSafeErrorMessages.has(error.message) || error.message.startsWith("That time cannot be used.")) {
+    return error.message;
+  }
+
+  return fallback;
 }
 
 async function markClientScheduleInvalid(clientId: string) {
