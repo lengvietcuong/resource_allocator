@@ -39,6 +39,7 @@ import {
   localTimeRangeOnOrAfterDate,
   parseLocalDateTime,
   startOfLocalDay,
+  startOfUtcDay,
 } from "@/lib/availability-time";
 
 const activityTypes = ["FITNESS", "FOOD", "MEDICATION", "THERAPY", "CONSULTATION"] as const;
@@ -702,6 +703,10 @@ function resourceHasAvailability(
   return mergedSlots.some((slot) => rangeContains(slot.start, slot.end, start, end));
 }
 
+function editedEventUnavailableMessage(reason: string) {
+  return `That time cannot be used. ${reason}`;
+}
+
 async function validateEditedEventTime({
   eventId,
   ignoredEventIds = [],
@@ -752,11 +757,11 @@ async function validateEditedEventTime({
     const capability = capabilityByStaff.get(staffId);
 
     if (scheduleMode === "REMOTE" && capability?.supportsRemote !== true) {
-      throw new Error("That time slot is unavailable. Choose another available time.");
+      throw new Error(editedEventUnavailableMessage("Required staff is not available for remote sessions."));
     }
 
     if (scheduleMode === "IN_PERSON" && capability?.supportsInPerson === false) {
-      throw new Error("That time slot is unavailable. Choose another available time.");
+      throw new Error(editedEventUnavailableMessage("Required staff is not available for in-person sessions."));
     }
   }
 
@@ -764,7 +769,13 @@ async function validateEditedEventTime({
     const slots = userSlots.filter((slot) => slot.userId === userId);
 
     if (!resourceHasAvailability(slots, startTime, endTime)) {
-      throw new Error("That time slot is unavailable. Choose another available time.");
+      throw new Error(
+        editedEventUnavailableMessage(
+          userId === clientId
+            ? "The client is unavailable at that time."
+            : "Required staff is unavailable at that time.",
+        ),
+      );
     }
   }
 
@@ -772,7 +783,7 @@ async function validateEditedEventTime({
     const slots = equipmentSlots.filter((slot) => slot.equipmentId === equipmentId);
 
     if (!resourceHasAvailability(slots, startTime, endTime)) {
-      throw new Error("That time slot is unavailable. Choose another available time.");
+      throw new Error(editedEventUnavailableMessage("Required equipment is unavailable at that time."));
     }
   }
 
@@ -799,7 +810,7 @@ async function validateEditedEventTime({
   );
 
   if (overlappingEvents.some((event) => event.clientId === clientId)) {
-    throw new Error("That time slot is unavailable. Choose another available time.");
+    throw new Error(editedEventUnavailableMessage("The client already has another event at that time."));
   }
 
   const overlappingActivityIds = overlappingEvents
@@ -824,7 +835,13 @@ async function validateEditedEventTime({
   const equipmentConflict = overlappingEquipment.some((link) => equipmentSet.has(link.equipmentId));
 
   if (staffConflict || equipmentConflict) {
-    throw new Error("That time slot is unavailable. Choose another available time.");
+    throw new Error(
+      editedEventUnavailableMessage(
+        staffConflict
+          ? "Required staff already has another event at that time."
+          : "Required equipment is already booked at that time.",
+      ),
+    );
   }
 }
 
@@ -1493,7 +1510,9 @@ export async function generateScheduleAction(formData: FormData) {
     const horizonDays = scheduleHorizonValue(formData);
 
     target = clientCalendarRedirect(redirectTarget(formData, `/?tab=clients&clientId=${clientId}`), clientId);
-    const effectiveFrom = effectiveDate ? parseLocalDateTime(effectiveDate, "00:00") : new Date();
+    const effectiveFrom = effectiveDate
+      ? startOfUtcDay(parseLocalDateTime(effectiveDate, "00:00"))
+      : startOfUtcDay(new Date());
 
     if (startOfLocalDay(effectiveFrom) < startOfLocalDay(new Date())) {
       throw new Error("Schedule start date cannot be in the past.");
