@@ -115,30 +115,31 @@ export function NoActionPlanState({
     }
   }
 
+  if (isGenerating && activities.length === 0) {
+    return <ActionPlanActivityCardSkeletonGrid count={6} />;
+  }
+
   if (activities.length === 0) {
     return (
-      <div className="space-y-4">
-        <div className="flex min-h-[28rem] items-center justify-center rounded-md border border-dashed bg-background p-8 text-center">
-          <div className="max-w-md">
-            <WandSparkles className="mx-auto size-10 text-muted-foreground" />
-            <h2 className="mt-4 text-xl font-semibold tracking-tight">No action plan yet</h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              Add activities for this client&apos;s action plan or generate using AI based on the client&apos;s info
-            </p>
-            <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
-              <AddActivityDialog
-                clientId={clientId}
-                equipmentOptions={equipmentOptions}
-                redirectTo={redirectTo}
-                staffOptions={staffOptions}
-              />
-              <Button loading={isGenerating} onClick={generate} type="button" variant="outline">
-                <Sparkles className="size-4" /> Auto generate
-              </Button>
-            </div>
+      <div className="flex min-h-[28rem] items-center justify-center rounded-md border border-dashed bg-background p-8 text-center">
+        <div className="max-w-md">
+          <WandSparkles className="mx-auto size-10 text-muted-foreground" />
+          <h2 className="mt-4 text-xl font-semibold tracking-tight">No action plan yet</h2>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Add activities for this client&apos;s action plan or generate using AI based on the client&apos;s info
+          </p>
+          <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
+            <AddActivityDialog
+              clientId={clientId}
+              equipmentOptions={equipmentOptions}
+              redirectTo={redirectTo}
+              staffOptions={staffOptions}
+            />
+            <Button loading={isGenerating} onClick={generate} type="button" variant="outline">
+              <Sparkles className="size-4" /> Auto generate
+            </Button>
           </div>
         </div>
-        {isGenerating ? <ActionPlanActivityCardSkeletonGrid count={6} /> : null}
       </div>
     );
   }
