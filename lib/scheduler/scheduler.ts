@@ -1,7 +1,6 @@
 import { and, asc, desc, eq, gt, inArray, lt, ne, or } from "drizzle-orm";
 
 import { db } from "@/lib/db";
-import { startOfUtcDay } from "@/lib/availability-time";
 import {
   actionPlans,
   activities,
@@ -25,6 +24,7 @@ import {
 const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * MINUTE;
 const SLOT_STEP_MINUTES = 15;
+const appTimeZone = process.env.APP_TIME_ZONE ?? process.env.NEXT_PUBLIC_APP_TIME_ZONE ?? "Asia/Ho_Chi_Minh";
 
 type ResourceLinks = {
   staffIds: string[];
@@ -113,8 +113,63 @@ function addDays(date: Date, days: number) {
   return new Date(date.getTime() + days * DAY);
 }
 
+function appDateParts(date: Date) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: appTimeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const value = (type: string) => {
+    const part = parts.find((item) => item.type === type)?.value;
+
+    if (!part) {
+      throw new Error("Unable to resolve schedule date.");
+    }
+
+    return Number(part);
+  };
+
+  return {
+    year: value("year"),
+    month: value("month"),
+    day: value("day"),
+    hour: value("hour"),
+    minute: value("minute"),
+    second: value("second"),
+  };
+}
+
+function appTimeZoneOffset(date: Date) {
+  const parts = appDateParts(date);
+  const asUtc = Date.UTC(
+    parts.year,
+    parts.month - 1,
+    parts.day,
+    parts.hour,
+    parts.minute,
+    parts.second,
+  );
+
+  return asUtc - date.getTime();
+}
+
+function appLocalDateTime(year: number, month: number, day: number, hour = 0, minute = 0) {
+  const guess = new Date(Date.UTC(year, month - 1, day, hour, minute));
+  const first = new Date(guess.getTime() - appTimeZoneOffset(guess));
+  const second = new Date(guess.getTime() - appTimeZoneOffset(first));
+
+  return second;
+}
+
 function startOfDay(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const parts = appDateParts(date);
+
+  return appLocalDateTime(parts.year, parts.month, parts.day);
 }
 
 function endOfDay(date: Date) {
@@ -122,16 +177,10 @@ function endOfDay(date: Date) {
 }
 
 function dateAt(date: Date, hour: number, minute = 0) {
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    hour,
-    minute,
-  );
-}
+  const parts = appDateParts(date);
 
-const appTimeZone = process.env.APP_TIME_ZONE ?? process.env.NEXT_PUBLIC_APP_TIME_ZONE ?? "Asia/Ho_Chi_Minh";
+  return appLocalDateTime(parts.year, parts.month, parts.day, hour, minute);
+}
 
 const failedWindowFormatter = new Intl.DateTimeFormat("en-SG", {
   weekday: "short",
@@ -149,6 +198,10 @@ function failedWindowLabel(window: MissedWindow) {
   return `From ${failedWindowFormatter.format(window.windowStart)} to ${failedWindowFormatter.format(displayEnd)}`;
 }
 
+function windowKey(window: MissedWindow) {
+  return `${window.windowStart.getTime()}-${window.windowEnd.getTime()}`;
+}
+
 function missedReason(failedWindows: MissedWindow[], reasons: string[]) {
   const sections: string[] = [];
 
@@ -162,15 +215,18 @@ function missedReason(failedWindows: MissedWindow[], reasons: string[]) {
 
   sections.push(
     "Missed scheduling windows:",
-    ...failedWindows.map((window) => `- ${failedWindowLabel(window)}`),
+    ...Array.from(new Map(failedWindows.map((window) => [windowKey(window), window])).values())
+      .map((window) => `- ${failedWindowLabel(window)}`),
   );
 
   return sections.join("\n");
 }
 
 function startOfWeek(date: Date) {
-  const day = date.getDay();
+  const parts = appDateParts(date);
+  const day = new Date(Date.UTC(parts.year, parts.month - 1, parts.day)).getUTCDay();
   const diff = day === 0 ? -6 : 1 - day;
+
   return startOfDay(addDays(date, diff));
 }
 
@@ -901,12 +957,27 @@ function occurrenceTargets(activity: Activity, start: Date, horizonEnd: Date): O
   }
 
   if (activity.frequencyUnit === "MONTH") {
+    const startParts = appDateParts(start);
+
     for (
-      let cursor = new Date(start.getFullYear(), start.getMonth(), 1);
+      let cursor = appLocalDateTime(startParts.year, startParts.month, 1);
       cursor < horizonEnd;
-      cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1)
+      cursor = (() => {
+        const parts = appDateParts(cursor);
+
+        return appLocalDateTime(
+          parts.month === 12 ? parts.year + 1 : parts.year,
+          parts.month === 12 ? 1 : parts.month + 1,
+          1,
+        );
+      })()
     ) {
-      const monthEnd = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
+      const cursorParts = appDateParts(cursor);
+      const monthEnd = appLocalDateTime(
+        cursorParts.month === 12 ? cursorParts.year + 1 : cursorParts.year,
+        cursorParts.month === 12 ? 1 : cursorParts.month + 1,
+        1,
+      );
       const windowStart = cursor < start ? start : cursor;
       const windowEnd = monthEnd > horizonEnd ? horizonEnd : monthEnd;
 
@@ -1259,7 +1330,7 @@ function copyManualEvents(events: CalendarEvent[]): ScheduledDraft[] {
 
 export async function generateScheduleForClient({
   clientId,
-  effectiveFrom = startOfUtcDay(new Date()),
+  effectiveFrom = startOfDay(new Date()),
   horizonDays = 90,
 }: {
   clientId: string;
