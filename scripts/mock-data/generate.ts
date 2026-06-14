@@ -976,21 +976,6 @@ for (const [clientIndex, client] of clients.entries()) {
     });
   }
 
-  manualEvents.push({
-    id: stableUuid(`board-meeting-${clientIndex}`),
-    scheduleId,
-    activityId: null,
-    title: "Unavailable: board commitments",
-    startTime: dateAt(22 + clientIndex, 9),
-    endTime: dateAt(22 + clientIndex, 17),
-    allDay: false,
-    scheduleMode: "SELF_GUIDED",
-    isManual: true,
-    blocksScheduling: blocksManualScheduling,
-    notes: blocksManualScheduling
-      ? "Existing client commitment."
-      : "Existing client commitment noted; does not block this demo schedule.",
-  });
 }
 
 async function resetDatabase() {

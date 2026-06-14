@@ -11,7 +11,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-04-15T17:00:00.000Z",
+      "dateJoined": "2026-04-16T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -24,7 +24,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_ACTION_PLAN",
-      "dateJoined": "2026-04-20T17:00:00.000Z",
+      "dateJoined": "2026-04-21T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -37,7 +37,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-04-25T17:00:00.000Z",
+      "dateJoined": "2026-04-26T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -50,7 +50,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-04-30T17:00:00.000Z",
+      "dateJoined": "2026-05-01T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -63,7 +63,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-05-05T17:00:00.000Z",
+      "dateJoined": "2026-05-06T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -76,7 +76,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-05-10T17:00:00.000Z",
+      "dateJoined": "2026-05-11T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -89,7 +89,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-05-15T17:00:00.000Z",
+      "dateJoined": "2026-05-16T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -102,7 +102,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-05-20T17:00:00.000Z",
+      "dateJoined": "2026-05-21T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -115,7 +115,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-05-25T17:00:00.000Z",
+      "dateJoined": "2026-05-26T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     },
@@ -128,7 +128,7 @@
       "avatarUrl": null,
       "role": "CLIENT",
       "scheduleStatus": "NO_SCHEDULE",
-      "dateJoined": "2026-05-30T17:00:00.000Z",
+      "dateJoined": "2026-05-31T00:00:00.000Z",
       "supportsRemote": true,
       "supportsInPerson": true
     }
@@ -36105,19 +36105,6 @@
       "notes": "Travel note for concierge awareness; schedule remains feasible around this trip."
     },
     {
-      "id": "cd98c69d-1fbb-427d-a645-67580d9c07cf",
-      "scheduleId": "79fdfa5f-f367-486e-a694-04f1670e40e8",
-      "activityId": null,
-      "title": "Unavailable: board commitments",
-      "startTime": "2026-07-09T02:00:00.000Z",
-      "endTime": "2026-07-09T10:00:00.000Z",
-      "allDay": false,
-      "scheduleMode": "SELF_GUIDED",
-      "isManual": true,
-      "blocksScheduling": false,
-      "notes": "Existing client commitment noted; does not block this demo schedule."
-    },
-    {
       "id": "f6ec230c-0538-4486-8eb8-f6b2dadeeb5b",
       "scheduleId": "43b2b84d-00bf-4d1a-a730-fa1a87f8200f",
       "activityId": null,
@@ -36142,19 +36129,6 @@
       "isManual": true,
       "blocksScheduling": false,
       "notes": "Travel note for concierge awareness; schedule remains feasible around this trip."
-    },
-    {
-      "id": "322f46eb-7ea2-4598-840c-6413417fb6c1",
-      "scheduleId": "43b2b84d-00bf-4d1a-a730-fa1a87f8200f",
-      "activityId": null,
-      "title": "Unavailable: board commitments",
-      "startTime": "2026-07-10T02:00:00.000Z",
-      "endTime": "2026-07-10T10:00:00.000Z",
-      "allDay": false,
-      "scheduleMode": "SELF_GUIDED",
-      "isManual": true,
-      "blocksScheduling": false,
-      "notes": "Existing client commitment noted; does not block this demo schedule."
     },
     {
       "id": "94620503-ecbe-4e4c-9895-1fdf735eec39",
@@ -36183,19 +36157,6 @@
       "notes": "Travel note for concierge awareness; schedule remains feasible around this trip."
     },
     {
-      "id": "51de2dfc-1736-4895-9584-595f04076058",
-      "scheduleId": "bedc5ba8-9686-4b3e-b9a7-e531d204ac9d",
-      "activityId": null,
-      "title": "Unavailable: board commitments",
-      "startTime": "2026-07-11T02:00:00.000Z",
-      "endTime": "2026-07-11T10:00:00.000Z",
-      "allDay": false,
-      "scheduleMode": "SELF_GUIDED",
-      "isManual": true,
-      "blocksScheduling": false,
-      "notes": "Existing client commitment noted; does not block this demo schedule."
-    },
-    {
       "id": "811d1399-99ce-4e03-9208-a47e6426bd94",
       "scheduleId": "434be29f-403f-43f1-9bd6-329fba256da6",
       "activityId": null,
@@ -36220,19 +36181,6 @@
       "isManual": true,
       "blocksScheduling": false,
       "notes": "Travel note for concierge awareness; schedule remains feasible around this trip."
-    },
-    {
-      "id": "b652de7f-31cf-4439-a064-21a7b7ebb1c3",
-      "scheduleId": "434be29f-403f-43f1-9bd6-329fba256da6",
-      "activityId": null,
-      "title": "Unavailable: board commitments",
-      "startTime": "2026-07-12T02:00:00.000Z",
-      "endTime": "2026-07-12T10:00:00.000Z",
-      "allDay": false,
-      "scheduleMode": "SELF_GUIDED",
-      "isManual": true,
-      "blocksScheduling": false,
-      "notes": "Existing client commitment noted; does not block this demo schedule."
     },
     {
       "id": "a9fdf1d8-0570-40bd-9d71-166694bae7ca",
@@ -36261,19 +36209,6 @@
       "notes": "Travel note for concierge awareness; schedule remains feasible around this trip."
     },
     {
-      "id": "ec1be233-997a-4621-bad8-8bedb28b2ceb",
-      "scheduleId": "5cbb52af-54a1-408d-b34e-926f21b90b36",
-      "activityId": null,
-      "title": "Unavailable: board commitments",
-      "startTime": "2026-07-13T02:00:00.000Z",
-      "endTime": "2026-07-13T10:00:00.000Z",
-      "allDay": false,
-      "scheduleMode": "SELF_GUIDED",
-      "isManual": true,
-      "blocksScheduling": false,
-      "notes": "Existing client commitment noted; does not block this demo schedule."
-    },
-    {
       "id": "b4398144-f355-4109-8cdb-995b47871490",
       "scheduleId": "9316d2b9-c00d-480f-82f1-5a5422879916",
       "activityId": null,
@@ -36298,19 +36233,6 @@
       "isManual": true,
       "blocksScheduling": false,
       "notes": "Travel note for concierge awareness; schedule remains feasible around this trip."
-    },
-    {
-      "id": "5fa92ce1-38a6-4988-b568-fbfa6a8bf3c2",
-      "scheduleId": "9316d2b9-c00d-480f-82f1-5a5422879916",
-      "activityId": null,
-      "title": "Unavailable: board commitments",
-      "startTime": "2026-07-14T02:00:00.000Z",
-      "endTime": "2026-07-14T10:00:00.000Z",
-      "allDay": false,
-      "scheduleMode": "SELF_GUIDED",
-      "isManual": true,
-      "blocksScheduling": false,
-      "notes": "Existing client commitment noted; does not block this demo schedule."
     },
     {
       "id": "591f6d35-e262-4afc-a082-2bd983bdbe1b",
@@ -36339,19 +36261,6 @@
       "notes": "Travel plan; blocks scheduling unless the care team adjusts the protocol."
     },
     {
-      "id": "0db6b0de-624e-4030-baff-cb7a33c9f0e0",
-      "scheduleId": "fc373c78-874e-4ef5-81c8-c774d9292de7",
-      "activityId": null,
-      "title": "Unavailable: board commitments",
-      "startTime": "2026-07-15T02:00:00.000Z",
-      "endTime": "2026-07-15T10:00:00.000Z",
-      "allDay": false,
-      "scheduleMode": "SELF_GUIDED",
-      "isManual": true,
-      "blocksScheduling": true,
-      "notes": "Existing client commitment."
-    },
-    {
       "id": "7cc69136-6bf5-4d27-9f17-8c433539ba5d",
       "scheduleId": "fdb83d95-6d08-4f0c-bba4-2412b75c30d3",
       "activityId": null,
@@ -36376,68 +36285,55 @@
       "isManual": true,
       "blocksScheduling": false,
       "notes": "Travel note for concierge awareness; schedule remains feasible around this trip."
-    },
-    {
-      "id": "d08c8386-f359-4403-9778-e65197b015bc",
-      "scheduleId": "fdb83d95-6d08-4f0c-bba4-2412b75c30d3",
-      "activityId": null,
-      "title": "Unavailable: board commitments",
-      "startTime": "2026-07-16T02:00:00.000Z",
-      "endTime": "2026-07-16T10:00:00.000Z",
-      "allDay": false,
-      "scheduleMode": "SELF_GUIDED",
-      "isManual": true,
-      "blocksScheduling": false,
-      "notes": "Existing client commitment noted; does not block this demo schedule."
     }
   ],
   "generatedSchedules": [
     {
-      "scheduleId": "b86126a0-ab09-4076-a6df-0242ab5ea651",
+      "scheduleId": "b99ba7e6-883b-4c2c-ac77-3ea5662fdd10",
       "version": 2,
-      "scheduledCount": 303,
+      "scheduledCount": 305,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "82d86cb0-e159-4c19-a3da-16eb41ace7d9",
+      "scheduleId": "6db191e7-b6d9-4945-892c-888376b018d3",
       "version": 2,
-      "scheduledCount": 303,
+      "scheduledCount": 305,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "d828b218-fc8b-434c-bcdf-9d2247589c7d",
+      "scheduleId": "ea343bfc-b947-4850-8011-87748e93412d",
       "version": 2,
-      "scheduledCount": 303,
+      "scheduledCount": 305,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "b0716a7f-dec5-460c-8989-f060fe321787",
+      "scheduleId": "b8f0f909-26b4-4d7f-9508-53cfbb24e531",
       "version": 2,
-      "scheduledCount": 303,
+      "scheduledCount": 305,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "16c484e4-cc38-48ac-91e6-9f26525d9455",
+      "scheduleId": "05712d36-84b2-4ff4-9069-c41f96d5849c",
       "version": 2,
-      "scheduledCount": 303,
+      "scheduledCount": 305,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "1a894e88-5ff5-4601-be68-270018040dc4",
+      "scheduleId": "f4f914b9-32af-41a4-be2c-f2128debf181",
       "version": 2,
-      "scheduledCount": 329,
+      "scheduledCount": 331,
       "unresolvedCount": 0,
       "warnings": []
     },
     {
-      "scheduleId": "6ba6cd36-b90c-4c6a-b402-62e8682fc6d1",
+      "scheduleId": "fa714e15-b45d-41d3-9936-db30ea4db6bb",
       "version": 2,
-      "scheduledCount": 475,
+      "scheduledCount": 477,
       "unresolvedCount": 5,
       "warnings": [
         "Dietitian protocol check-in: 1 occurrence could not be arranged.",
@@ -36445,9 +36341,9 @@
       ]
     },
     {
-      "scheduleId": "24a64371-87a9-4315-b73b-e9f69731120f",
+      "scheduleId": "3ab4f5f5-03bb-4112-9853-6e0de35587a2",
       "version": 2,
-      "scheduledCount": 303,
+      "scheduledCount": 305,
       "unresolvedCount": 0,
       "warnings": []
     }
