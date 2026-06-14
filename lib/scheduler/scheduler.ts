@@ -131,16 +131,20 @@ function dateAt(date: Date, hour: number, minute = 0) {
   );
 }
 
+const appTimeZone = process.env.APP_TIME_ZONE ?? process.env.NEXT_PUBLIC_APP_TIME_ZONE ?? "Asia/Ho_Chi_Minh";
+
 const failedWindowFormatter = new Intl.DateTimeFormat("en-SG", {
   weekday: "short",
   day: "2-digit",
   month: "short",
   year: "numeric",
+  timeZone: appTimeZone,
 });
 
 function failedWindowLabel(window: MissedWindow) {
-  const inclusiveEnd = addDays(startOfDay(window.windowEnd), -1);
-  const displayEnd = inclusiveEnd >= startOfDay(window.windowStart) ? inclusiveEnd : window.windowEnd;
+  const displayEnd = window.windowEnd > window.windowStart
+    ? new Date(window.windowEnd.getTime() - 1)
+    : window.windowEnd;
 
   return `From ${failedWindowFormatter.format(window.windowStart)} to ${failedWindowFormatter.format(displayEnd)}`;
 }
